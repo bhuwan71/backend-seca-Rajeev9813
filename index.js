@@ -33,7 +33,7 @@ app.use(express.static("./public"));
 dotenv.config();
 
 //Defining the port
-const PORT = process.env.PORT; 
+const PORT = process.env.PORT || 8000; 
 
 // Making a test endpoint
 // Endpoints : POST, GET, PUT, DELETE
@@ -49,6 +49,9 @@ app.use('/api/user', require('./routes/userRoutes'));
 
 // configuring Routes of Course
 app.use('/api/course', require('./routes/courseRoutes'));
+
+// configuring Routes of Quiz
+app.use('/api/quiz', require('./routes/quizzesRoutes'));
 
 // Connecting to database
 connectDatabase();

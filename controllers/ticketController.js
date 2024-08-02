@@ -37,7 +37,7 @@ const createTicket = asyncHandler(async (req, res) => {
   const { product, description } = req.body;
   if (!product || !description) {
     res.status(400);
-    throw new Error("Please add a product ansd description");
+    throw new Error("Please add a product and description");
   }
   const user = await User.findById(req.user.id);
   if (!user) {

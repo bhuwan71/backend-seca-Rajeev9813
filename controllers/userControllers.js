@@ -61,9 +61,6 @@ const createUser = async (req,res) => {
             "message" : "Internal Server Error!" 
         })
     }
- 
-
-    
 }
 
                                             // Login function  for logging in the user
