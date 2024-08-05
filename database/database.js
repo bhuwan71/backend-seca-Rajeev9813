@@ -6,10 +6,15 @@ const mongoose = require("mongoose");
 
 //Defining a function
 const connectDatabase = () => {
-  mongoose.connect(process.env.MONGODB_CLOUD || "mongodb+srv://test:test@cluster0.2ifqodq.mongodb.net/").then(() => {
-    //Functions (Connection)
-    console.log("Database Connected !");
-  });
+  mongoose
+    .connect(
+      process.env.MONGODB_CLOUD ||
+        "mongodb+srv://bhuwanchettri71:12345@testdb.4pz3ze7.mongodb.net/?retryWrites=true&w=majority&appName=TestDB"
+    )
+    .then(() => {
+      //Functions (Connection)
+      console.log("Database Connected !");
+    });
 };
 
 //Exporting the function
