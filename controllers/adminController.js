@@ -26,7 +26,6 @@ exports.createAdmin = async (req, res) => {
         // Create and save the admin user
         const newAdmin = new User(adminData);
         await newAdmin.save();
-
         res.status(201).json({ message: 'Admin user created successfully!' });
     } catch (error) {
         console.error(error);
