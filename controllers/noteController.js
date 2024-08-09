@@ -32,7 +32,6 @@ const getNotes = asyncHandler(async (req, res) => {
 // @access Private
 const addNote = asyncHandler(async (req, res) => {
   const ticket = await Tickets.findById(req.params.ticketId);
-
   if (ticket.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("User not authorized");

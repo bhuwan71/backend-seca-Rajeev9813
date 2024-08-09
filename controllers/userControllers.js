@@ -3,8 +3,6 @@ const bcrypt = require('bcrypt');
 const userModel = require('../models/userModel'); //importing user model
 const jwt = require('jsonwebtoken');
 const createUser = async (req,res) => {
-    // Checking the incoming data
-    console.log(req.body);
 
     // Destructure the incoming data
     const {firstName, lastName, email, password} = req.body;
@@ -66,8 +64,6 @@ const createUser = async (req,res) => {
                                             // Login function  for logging in the user
 const loginUser =  async (req,res) => {
 
-    // Check incoming data
-    console.log(req.body)
 
     // Destructuring the coming data
     const {email, password}  = req.body; 

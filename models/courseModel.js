@@ -18,10 +18,10 @@ const courseSchema = new mongoose.Schema({
         required : true,
         maxLength : 200
     },
-    courseImage : {
-        type : String,
-        required : true
-    },
+    // courseImage : {
+    //     type : String,
+    //     required : false
+    // },
 
     createdAt : {
         type : Date,
