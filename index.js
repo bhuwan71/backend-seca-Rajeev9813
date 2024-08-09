@@ -44,6 +44,10 @@ app.get('/test', (req,res)=>{
 // http://localhost:5000/test to check in postman 
 
 
+// Use the admin routes
+app.use('/api/admin',  require('./routes/adminRoutes'));
+
+
 // configuring Routes of User
 app.use('/api/user', require('./routes/userRoutes'));
 
@@ -52,6 +56,9 @@ app.use('/api/course', require('./routes/courseRoutes'));
 
 // configuring Routes of Quiz
 app.use('/api/quiz', require('./routes/quizzesRoutes'));
+
+app.use('/api/result', require('./routes/resultRoute'));
+
 
 // Connecting to database
 connectDatabase();

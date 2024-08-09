@@ -3,9 +3,6 @@ const courseModel = require("../models/courseModel");
 const fs = require("fs");
 
 const createCourse = async (req, res) => {
-  // check incomming data
-  console.log(req.body);
-  console.log(req.files);
 
   // Destructuring the body data (json)
   const { courseName, coursePrice, courseCategory, courseDescription } =
@@ -19,26 +16,20 @@ const createCourse = async (req, res) => {
     });
   }
 
-  // validate if there is image
-  if (!req.files || !req.files.courseImage) {
-    return res.status(400).json({
-      success: false,
-      message: "Image not found!!",
-    });
-  }
 
-  const { courseImage } = req.files;
+
+  // const { courseImage } = req.files;
 
   // upload image
   // 1. Generate new image name (abc.png) -> (213456-abc.png)
-  const imageName = `${Date.now()}-${courseImage.name}`;
+  // const imageName = `${Date.now()}-${courseImage.name}`;
 
   // 2. Make a upload path (/path/uplad - directory)
-  const imageUploadPath = path.join(__dirname, `../public/course/${imageName}`);
+  // const imageUploadPath = path.join(__dirname, `../public/course/${imageName}`);
 
   // 3. Move to that directory (await, try-catch)
   try {
-    await courseImage.mv(imageUploadPath);
+    // await courseImage.mv(imageUploadPath);
 
     //saving to database
     const newCourse = new courseModel({
@@ -46,7 +37,7 @@ const createCourse = async (req, res) => {
       coursePrice: coursePrice,
       courseCategory: courseCategory,
       courseDescription: courseDescription,
-      courseImage: imageName,
+      // courseImage: imageName,
     });
 
     const course = await newCourse.save();
