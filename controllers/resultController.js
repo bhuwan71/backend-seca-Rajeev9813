@@ -3,12 +3,24 @@ const Result = require("../models/resultModel");
 // Get all results
 const getResults = async (req, res) => {
   try {
-    const results = await Result.find({}).populate("quizId", "quizName");
+    // Fetch all results and populate both userId and quizId fields
+    const results = await Result.find({})
+      .populate({
+        path: 'userId', // Populate user data
+        select: 'firstName lastName email' // Specify fields to include from User collection
+      })
+      .populate({
+        path: 'quizId', // Populate quiz data
+        select: 'quizName quizDescription quizCategory questions difficultyLevel' // Specify fields to include from Quiz collection
+      })
+      .exec();
+
     res.status(200).json(results);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Get a single result by user ID
 const getResult = async (req, res) => {
@@ -64,10 +76,10 @@ const getUserProgress = async (req, res) => {
       return res.status(404).json({ message: "No results found for this user" });
     }
 
-    const progress = results.map(result => {
+    const progress = results?.map(result => {
       const [correct, total] = result.score.split("/").map(Number);
       return {
-        quizName: result.quizId.quizName,
+        quizName: result?.quizId?.quizName,
         correct,
         total,
         percentage: (correct / total) * 100,
