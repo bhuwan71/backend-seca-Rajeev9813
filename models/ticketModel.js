@@ -7,10 +7,16 @@ const ticketSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
-    product: { //Defining Product
+    course: {
+      //Defining Product
       type: String,
       required: [true, "Please select a course"],
-      enum: ["Intermediate English", "Advanced English", "Business English", "English"],
+      enum: [
+        "Intermediate English",
+        "Advanced English",
+        "Business English",
+        "English",
+      ],
     },
     description: {
       type: String,
