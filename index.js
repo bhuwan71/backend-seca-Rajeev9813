@@ -68,3 +68,5 @@ connectDatabase();
 app.listen(PORT, ()=>{
     console.log(`Server is Running on port ${PORT}!`)
 })
+
+module.exports = app;
