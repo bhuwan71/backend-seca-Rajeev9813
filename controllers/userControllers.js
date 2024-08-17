@@ -108,10 +108,8 @@ const updateUser = async (req, res) => {
 
 // Login function  for logging in the user
 const loginUser = async (req, res) => {
-  // Destructuring the coming data
   const { email, password } = req.body;
 
-  // Validating if the credentials match or not
   if (!email || !password) {
     return res.json({
       success: false,
@@ -119,13 +117,9 @@ const loginUser = async (req, res) => {
     });
   }
 
-  // try catch for error handling
   try {
-    // find user (email)
     const user = await userModel.findOne({ email: email });
-    // found data : firstName, lastname, email, password
 
-    // if not found sending an (error message)
     if (!user) {
       return res.json({
         success: false,
@@ -133,68 +127,63 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // Comparing password (bcrypt)
     const isValidPassword = await bcrypt.compare(password, user.password);
 
-    //if not valid sending (error)
     if (!isValidPassword) {
-      return res.json({
+      return res.status(401).json({
         success: false,
-        message: "Password not matched!",
+        message: "Password is incorrect!",
       });
     }
 
-    // token (Generate - user Data + KEY)
-    const token = await jwt.sign(
+    const token = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
     );
 
-    // response (token, user data)
-    res.json({
+    res.status(200).json({
       success: true,
       message: "Login Successful!",
       token: token,
       userData: user,
     });
   } catch (error) {
-    // to make debug easy
-    console.log(error);
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: "Internal Server Error!",
     });
   }
 };
 
+
 const getSingleUser = async (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    try {
-        // Find user by ID
-        const user = await userModel.findById(id).select('-password'); // Exclude the password field
+  try {
+    // Find user by ID
+    const user = await userModel.findById(id).select("-password"); // Exclude the password field
 
-        // Check if user exists
-        if (!user) {
-            return res.json({
-                success: false,
-                message: "User not found!",
-            });
-        }
-
-        // Send the user as the response
-        res.json({
-            success: true,
-            user: user,
-        });
-
-    } catch (error) {
-        console.log(error);
-        res.json({
-            success: false,
-            message: "Internal Server Error!",
-        });
+    // Check if user exists
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User not found!",
+      });
     }
+
+    // Send the user as the response
+    res.json({
+      success: true,
+      user: user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: "Internal Server Error!",
+    });
+  }
 };
 
 const getAllUsers = async (req, res) => {
